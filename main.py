@@ -1,5 +1,7 @@
 import mysql.connector
 
+from prettytable import PrettyTable
+
 conn=mysql.connector.connect(host='localhost',password='DBMS',user='root')
 
 cur=conn.cursor()
@@ -77,9 +79,17 @@ while True:
 
             cur.execute('select * from expenses')
 
-            for Exp in cur.fetchall():
+            results=cur.fetchall()
 
-                print(Exp)
+            col_names=[desc[0] for desc in cur.description]
+
+            table=PrettyTable(col_names)
+
+            for row in results:
+
+                table.add_row(row)
+
+            print(table)
 
         elif view_choice==2:
 
@@ -93,9 +103,17 @@ while True:
                             group by category
                         ''',(month,year))
             
-            for Exp in cur.fetchall():
+            results=cur.fetchall()
 
-                print(f'Category: {Exp[0]}, Total: {Exp[1]}')
+            col_names=[desc[0] for desc in cur.description]
+
+            table=PrettyTable(col_names)
+
+            for row in results:
+
+                table.add_row(row)
+
+            print(table)
 
         elif view_choice==3:
 
@@ -106,10 +124,18 @@ while True:
                         where category=%s group by category
                         ''',(category1,))
 
-            for exp in cur.fetchall():
+            results=cur.fetchall()
 
-                print(f'{exp}')
+            col_names=[desc[0] for desc in cur.description]
 
+            table=PrettyTable(col_names)
+
+            for row in results:
+
+                table.add_row(row)
+
+            print(table)
+            
         elif view_choice==4:
 
             payment_type=input('Enter the payment mode:')
@@ -119,10 +145,18 @@ while True:
                         where Payment_Method=%s group by Payment_Method
                         ''',(payment_type,))
 
-            for exp in cur.fetchall():
+            results=cur.fetchall()
 
-                print(f'{exp}')
+            col_names=[desc[0] for desc in cur.description]
 
+            table=PrettyTable(col_names)
+
+            for row in results:
+
+                table.add_row(row)
+
+            print(table)
+            
         elif view_choice==5:
 
             date1=input('Enter the date in YYYY-MM-DD format:')
@@ -132,9 +166,17 @@ while True:
                         where date=%s
                         ''',(date1,))
 
-            for exp in cur.fetchall():
+            results=cur.fetchall()
 
-                print(f'Category: {exp[0]} \t Price:{exp[1]}')
+            col_names=[desc[0] for desc in cur.description]
+
+            table=PrettyTable(col_names)
+
+            for row in results:
+
+                table.add_row(row)
+
+            print(table)
 
         elif view_choice==6:
 
@@ -147,9 +189,17 @@ while True:
                         where month(date)=%s and year(date)=%s
                         ''',(month1,year1))
 
-            for exp in cur.fetchall():
+            results=cur.fetchall()
 
-                print(f'Category: {exp[0]} \t Price:{exp[1]}')
+            col_names=[desc[0] for desc in cur.description]
+
+            table=PrettyTable(col_names)
+
+            for row in results:
+
+                table.add_row(row)
+
+            print(table)
 
         elif view_choice==7:
 
@@ -160,9 +210,17 @@ while True:
                         where year(date)=%s
                         ''',(year1,))
 
-            for exp in cur.fetchall():
+            results=cur.fetchall()
 
-                print(f'Category: {exp[0]} \t Price:{exp[1]}')
+            col_names=[desc[0] for desc in cur.description]
+
+            table=PrettyTable(col_names)
+
+            for row in results:
+
+                table.add_row(row)
+
+            print(table)
 
         elif view_choice==8:
 
@@ -174,11 +232,18 @@ while True:
                             group by category
                         ''',(year,))
             
-            for Exp in cur.fetchall():
+            results=cur.fetchall()
 
-                print(f'Category: {Exp[0]}, Total: {Exp[1]}')
+            col_names=[desc[0] for desc in cur.description]
 
+            table=PrettyTable(col_names)
 
+            for row in results:
+
+                table.add_row(row)
+
+            print(table)
+            
         else:
 
             print('Invalid view choice')
